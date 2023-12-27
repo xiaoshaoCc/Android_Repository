@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/afragement"
+        android:icon="@mipmap/home_page"
+        android:title="Home"
+        />
+    <item
+        android:id="@+id/cfragement"
+        android:icon="@mipmap/message"
+        android:title="Message"
+        />
+    <item
+        android:id="@+id/dfragement"
+        android:icon="@mipmap/person"
+        android:title="Person"
+        />
+</menu>

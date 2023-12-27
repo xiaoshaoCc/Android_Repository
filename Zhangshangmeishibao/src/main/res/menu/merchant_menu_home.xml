@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/windows_fragment"
+        android:icon="@mipmap/home_page"
+        android:title="Windows"
+        />
+    <item
+        android:id="@+id/orders_fragment"
+        android:icon="@mipmap/group"
+        android:title="Orders"
+        />
+</menu>
