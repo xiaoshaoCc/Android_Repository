@@ -8,7 +8,7 @@
     <item
         android:id="@+id/cfragement"
         android:icon="@mipmap/message"
-        android:title="Message"
+        android:title="Order"
         />
     <item
         android:id="@+id/dfragement"

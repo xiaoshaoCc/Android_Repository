@@ -1,12 +1,14 @@
 package com.example.myapplication.UserCenterFragment;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -98,7 +100,25 @@ public class FoodActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder=new AlertDialog.Builder(FoodActivity.this);
+                builder.setTitle("订单");
+                builder.setMessage("总价："+total_price.getText().toString());
+                builder.setPositiveButton("支付订单", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        String msg="支付成功";
+                        if(msg.equals("支付成功")){
+                            Snackbar.make(view,"支付成功",Snackbar.LENGTH_LONG).show();
 
+                        }else {
+                            AlertDialog.Builder builder1=new AlertDialog.Builder(FoodActivity.this);
+                            builder1.setMessage("支付失败");
+                            builder1.show();
+                        }
+                    }
+                });
+                builder.setNegativeButton("取消",null);
+                builder.show();
             }
         });
 
