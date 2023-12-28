@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                                 String response=merchantHttpUtil.LoginCheck(merchant);
                                 if (response.equals("登陆成功")) {
                                     Intent intent = new Intent(LoginActivity.this, MerchantMainActivity.class);
+                                    intent.putExtra("merchant_id",merchant.getMerchant_id());
                                     startActivity(intent);
                                     finish();
                                 } else {

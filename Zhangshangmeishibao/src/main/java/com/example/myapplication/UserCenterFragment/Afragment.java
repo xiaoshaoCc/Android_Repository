@@ -20,12 +20,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.myapplication.Databases.Food;
+import com.example.myapplication.Databases.Order;
 import com.example.myapplication.Databases.Window;
 import com.example.myapplication.Login.LoginActivity;
 import com.example.myapplication.R;
 import com.example.myapplication.Util.UserHttpUtil;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.gson.Gson;
+import com.google.gson.JsonSyntaxException;
 import com.google.gson.reflect.TypeToken;
 import com.youth.banner.Banner;
 import com.youth.banner.adapter.BannerImageAdapter;
@@ -44,10 +46,33 @@ public class Afragment extends Fragment {
     private TextView username;
     List<Window> windowsList = new ArrayList<>();
     MyAdapter mMyAdapter;
-    String json;
+    String json,msg;
 
 
-
+    @Override
+    public void onStart() {
+        super.onStart();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UserHttpUtil userHttpUtil=new UserHttpUtil();
+                json=userHttpUtil.WindowGet();
+                Gson gson=new Gson();
+                Type type = new TypeToken<List<Window>>() {}.getType();
+                try {
+                    // 尝试解析为 List<Order>
+                    windowsList = gson.fromJson(json, type);
+                } catch (JsonSyntaxException e) {
+                    // 如果解析为 List<Order> 失败，尝试解析为单个 Order 对象
+                    Window singleOrder = gson.fromJson(json, Window.class);
+                    windowsList = new ArrayList<>();
+                    if (singleOrder != null) {
+                        windowsList.add(singleOrder);
+                    }
+                }
+            }
+        }).start();
+    }
 
     @Nullable
     @Override
@@ -56,7 +81,7 @@ public class Afragment extends Fragment {
 
         username=view.findViewById(R.id.welcome);
         Intent intent=getActivity().getIntent();
-        String msg=intent.getStringExtra("username");
+        msg=intent.getStringExtra("username");
         username.setText("Hello!,"+msg);
 
         //加载banner控件
@@ -84,16 +109,7 @@ public class Afragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(requireContext());
         layoutManager.setOrientation(RecyclerView.VERTICAL);
         mRecyclerView.setLayoutManager(layoutManager);
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                UserHttpUtil userHttpUtil=new UserHttpUtil();
-                json=userHttpUtil.WindowGet();
-                Gson gson=new Gson();
-                Type type = new TypeToken<List<Window>>() {}.getType();
-                windowsList=gson.fromJson(json,type);
-            }
-        }).start();
+
         return  view;
     }
     class MyAdapter extends RecyclerView.Adapter<MyViewHoder> {
@@ -120,6 +136,7 @@ public class Afragment extends Fragment {
                     }else {
                         Intent intent = new Intent(requireContext(), FoodActivity.class);
                         intent.putExtra("window_id", window.getWindow_id());
+                        intent.putExtra("username",msg);
                         startActivity(intent);
                     }
                 }

@@ -1,5 +1,7 @@
 package com.example.myapplication.Util;
 
+import com.example.myapplication.Databases.Order;
+import com.example.myapplication.Databases.Order_detail;
 import com.example.myapplication.Databases.User;
 import com.google.gson.Gson;
 
@@ -12,6 +14,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class UserHttpUtil {
+    String url="http://192.168.0.3:8080";
 
     String responses;
     //注册验证
@@ -21,7 +24,7 @@ public class UserHttpUtil {
         OkHttpClient client=new OkHttpClient();
         RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/usr/insert")
+                .url(url+"/usr/insert")
                 .post(body)
                 .build();
 
@@ -41,7 +44,7 @@ public class UserHttpUtil {
         String json=gson.toJson(usr);
         RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/usr/checkregister")
+                .url(url+"/usr/checkregister")
                 .post(body)
                 .build();
         try {
@@ -60,7 +63,7 @@ public class UserHttpUtil {
         String json=gson.toJson(usr);
         RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/usr/selectpsw")
+                .url(url+"/usr/selectpsw")
                 .post(body)
                 .build();
         try {
@@ -75,7 +78,7 @@ public class UserHttpUtil {
     public String WindowGet(){
         OkHttpClient client= new OkHttpClient();
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/window/windowlist")
+                .url(url+"/window/windowlist")
                 .get()
                 .build();
         try {
@@ -90,7 +93,7 @@ public class UserHttpUtil {
     public String FoodGet(String window_id){
         OkHttpClient client= new OkHttpClient();
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/food/get_food?window_id="+window_id)
+                .url(url+"/food/get_food?window_id="+window_id)
                 .get()
                 .build();
         try {
@@ -109,8 +112,60 @@ public class UserHttpUtil {
         String json=gson.toJson(usr);
         RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/usr/edit_user")
+                .url(url+"/usr/edit_user")
                 .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses=response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responses;
+    }
+    //提交订单
+    public void Order_submit(Order order){
+        OkHttpClient client= new OkHttpClient();
+        Gson gson=new Gson();
+        String json=gson.toJson(order);
+        RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
+        Request request=new Request.Builder()
+                .url(url+"/order/insert_order")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses=response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //提交详细订单
+    public void Order_detail_submit(Order_detail order){
+        OkHttpClient client= new OkHttpClient();
+        Gson gson=new Gson();
+        String json=gson.toJson(order);
+        RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
+        Request request=new Request.Builder()
+                .url(url+"/order_detail/insert")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses=response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    //获取用户订单
+    public String Find_Order(String user_id){
+        OkHttpClient client= new OkHttpClient();
+        Request request=new Request.Builder()
+                .url(url+"/order/select_order?user_id="+user_id)
+                .get()
                 .build();
         try {
             Response response = client.newCall(request).execute();
