@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -152,7 +153,7 @@ public class Afragment extends Fragment {
     class MyViewHoder extends RecyclerView.ViewHolder {
         TextView mTitleTv;
         ImageView mTitleContent;
-        LinearLayout linearLayout;
+        ConstraintLayout linearLayout;
         TextView window_status;
 
         public MyViewHoder(@NonNull View itemView) {

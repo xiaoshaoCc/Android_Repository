@@ -15,7 +15,7 @@ import okhttp3.Response;
 
 public class MerchantHttpUtil {
 
-    String url="http://192.168.0.3:8080";
+    String url="http://121.40.249.214:8080";
 
     String responses;
     //注册验证
