@@ -7,7 +7,10 @@ import androidx.core.app.ActivityCompat;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -50,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
     private MerchantHttpUtil merchantHttpUtil;
     private UserHttpUtil userHttpUtil;
     private Spinner spinner;
-
+    String response;
     //点击两次退出按钮后退出
     private long exitTime = 0;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -124,13 +127,13 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 userHttpUtil = new UserHttpUtil();
-                                String response = userHttpUtil.LoginCheck(user);
+                                response = userHttpUtil.LoginCheck(user);
                                 if (response.equals("登陆成功")) {
                                     Intent intent = new Intent(LoginActivity.this, UserMainActivity.class);
                                     intent.putExtra("username",user.getId());
                                     startActivity(intent);
                                     finish();
-                                } else {
+                                } else{
                                     Snackbar.make(view,response,Snackbar.LENGTH_LONG).show();
                                 }
                             }
@@ -147,7 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                             @Override
                             public void run() {
                                 merchantHttpUtil=new MerchantHttpUtil();
-                                String response=merchantHttpUtil.LoginCheck(merchant);
+                                response=merchantHttpUtil.LoginCheck(merchant);
                                 if (response.equals("登陆成功")) {
                                     Intent intent = new Intent(LoginActivity.this, MerchantMainActivity.class);
                                     intent.putExtra("merchant_id",merchant.getMerchant_id());

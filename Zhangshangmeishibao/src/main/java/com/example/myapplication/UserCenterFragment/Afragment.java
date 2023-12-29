@@ -50,9 +50,15 @@ public class Afragment extends Fragment {
     String json,msg;
 
 
+    @Nullable
     @Override
-    public void onStart() {
-        super.onStart();
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_a, container, false);
+
+        username=view.findViewById(R.id.welcome);
+        Intent intent=getActivity().getIntent();
+        msg=intent.getStringExtra("username");
+        username.setText("Hello!,"+msg);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -73,17 +79,6 @@ public class Afragment extends Fragment {
                 }
             }
         }).start();
-    }
-
-    @Nullable
-    @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_a, container, false);
-
-        username=view.findViewById(R.id.welcome);
-        Intent intent=getActivity().getIntent();
-        msg=intent.getStringExtra("username");
-        username.setText("Hello!,"+msg);
 
         //加载banner控件
         banner=(Banner) view.findViewById(R.id.banner);

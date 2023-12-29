@@ -17,6 +17,8 @@ public class UserHttpUtil {
     String url="http://121.40.249.214:8080";
 
     String responses;
+
+
     //注册验证
     public String Register(User user)  {
         Gson gson = new Gson();
@@ -68,8 +70,19 @@ public class UserHttpUtil {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            responses=response.body().string();
-            response.close();
+
+            if (response.isSuccessful()) {
+                // 在将其转换为字符串之前检查响应是否成功
+                responses = response.body().string();
+            } else {
+                responses = "登录失败"; // 设置适当的消息以表示登录失败
+            }
+
+            // 关闭响应体
+            if (response.body() != null) {
+                response.body().close();
+            }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
