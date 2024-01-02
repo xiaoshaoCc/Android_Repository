@@ -1,16 +1,19 @@
 package com.example.myapplication.Login;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
+import android.app.DownloadManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
+import android.net.Uri;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
+import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.animation.Animation;
@@ -28,12 +31,13 @@ import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.mapapi.SDKInitializer;
 import com.example.myapplication.MerchantCenterFragment.MerchantMainActivity;
-import com.example.myapplication.UserCenterFragment.Afragment;
 import com.example.myapplication.UserCenterFragment.UserMainActivity;
 import com.example.myapplication.Databases.Merchant;
 import com.example.myapplication.Databases.User;
 import com.example.myapplication.R;
+import com.example.myapplication.Util.AppUtil;
 import com.example.myapplication.Util.MerchantHttpUtil;
+import com.example.myapplication.Util.UpateUtil;
 import com.example.myapplication.Util.UserHttpUtil;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -53,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     private MerchantHttpUtil merchantHttpUtil;
     private UserHttpUtil userHttpUtil;
     private Spinner spinner;
-    String response;
+    String response,version;
     //点击两次退出按钮后退出
     private long exitTime = 0;
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -82,6 +86,46 @@ public class LoginActivity extends AppCompatActivity {
         }else {
             requestLocation();
         }
+
+        String versionName= AppUtil.getAppVersionName(getApplicationContext());
+
+
+        //应用程序更新
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                UpateUtil upateUtil=new UpateUtil();
+                version=upateUtil.VersionGet();
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        if(!version.equals(versionName)) {
+                            AlertDialog.Builder builder=new AlertDialog.Builder(LoginActivity.this);
+                            builder.setTitle("更新");
+                            builder.setMessage("应用程序已更新到"+version+"版本，请更新软件");
+                            builder.setPositiveButton("确认", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    //更新服务
+                                    String downloadUrl = "http://192.168.0.3:9090/download?fileName=system.pptx";
+                                    Context context = getApplicationContext();
+                                    // 使用 Intent 打开浏览器并下载文件
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
+                                    // 添加 FLAG_ACTIVITY_NEW_TASK 标志
+                                    browserIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+                                    context.startActivity(browserIntent);
+                                }
+                            });
+                            builder.show();
+                        }
+                    }
+                });
+
+            }
+        }).start();
+
+
 
 
         register=findViewById(R.id.register);

@@ -57,7 +57,7 @@ public class Edit_password_Activity extends AppCompatActivity {
                                             public void onClick(DialogInterface dialogInterface, int i) {
                                                 Intent intent = new Intent(Edit_password_Activity.this, LoginActivity.class);
                                                 startActivity(intent);
-                                                finish();
+                                                System.exit(0);
                                             }
                                         });
                                         builder.setNegativeButton("取消",null);

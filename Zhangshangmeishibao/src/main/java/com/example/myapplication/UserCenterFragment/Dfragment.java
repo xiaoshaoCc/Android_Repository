@@ -56,6 +56,7 @@ public class Dfragment extends Fragment {
                         Intent chang=new Intent(getActivity(), LoginActivity.class);
                         startActivity(chang);
                         getActivity().finish();
+                        System.exit(0);
                     }
                 });
                 builder.setNegativeButton("取消",null);
