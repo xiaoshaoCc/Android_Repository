@@ -8,7 +8,7 @@ import okhttp3.Response;
 
 public class UpateUtil {
 
-    String url="http://192.168.0.3:9090";
+    String url="http://121.40.249.214:8080";
     String responses;
 
     public String VersionGet(){

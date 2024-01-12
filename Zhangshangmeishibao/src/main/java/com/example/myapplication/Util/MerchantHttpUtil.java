@@ -112,7 +112,7 @@ public class MerchantHttpUtil {
     public String Food_delete(String id){
         OkHttpClient client= new OkHttpClient();
         Request request=new Request.Builder()
-                .url("http://192.168.0.3:8080/food/food_delete?food_id="+id)
+                .url(url+"/food/food_delete?food_id="+id)
                 .get()
                 .build();
         try {

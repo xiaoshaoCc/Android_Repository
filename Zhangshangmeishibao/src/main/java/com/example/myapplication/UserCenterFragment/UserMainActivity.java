@@ -1,5 +1,6 @@
 package com.example.myapplication.UserCenterFragment;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -7,6 +8,8 @@ import androidx.navigation.ui.NavigationUI;
 
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.Toast;
 
 import com.example.myapplication.R;
@@ -33,7 +36,6 @@ public class UserMainActivity extends AppCompatActivity {
         return super.onKeyDown(keyCode, event);
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,5 +46,11 @@ public class UserMainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragement);
         //将菜单项与页面相互绑定
         NavigationUI.setupWithNavController(bottomNavigation,navController);
+
+
+
+
     }
+
+
 }

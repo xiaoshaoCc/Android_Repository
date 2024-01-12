@@ -1,8 +1,11 @@
 package com.example.myapplication.Util;
 
+import com.example.myapplication.Databases.Comment;
+import com.example.myapplication.Databases.Healthy_diet;
 import com.example.myapplication.Databases.Order;
 import com.example.myapplication.Databases.Order_detail;
 import com.example.myapplication.Databases.User;
+import com.example.myapplication.UserCenterFragment.Healthydiet;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -183,6 +186,93 @@ public class UserHttpUtil {
         try {
             Response response = client.newCall(request).execute();
             responses=response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responses;
+    }
+
+    public String Insert_Text(Healthy_diet healthy_diet){
+        OkHttpClient client= new OkHttpClient();
+        Gson gson=new Gson();
+        String json=gson.toJson(healthy_diet);
+        RequestBody body=RequestBody.create(json, MediaType.parse("application/json"));
+        Request request=new Request.Builder()
+                .url(url+"/healthydiet/insert")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses=response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  responses;
+    }
+
+    public String Healthydiet_Findall(){
+        OkHttpClient client= new OkHttpClient();
+        Request request=new Request.Builder()
+                .url(url+"/healthydiet/findall")
+                .get()
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses=response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  responses;
+    }
+
+
+    public String Insert_Comment(Comment comment) {
+        OkHttpClient client = new OkHttpClient();
+        Gson gson = new Gson();
+        String json = gson.toJson(comment);
+        RequestBody body = RequestBody.create(json, MediaType.parse("application/json"));
+        Request request = new Request.Builder()
+                .url(url + "/comment/insert")
+                .post(body)
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses = response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responses;
+    }
+
+    public String Get_Comment(int Healthy_diet_id){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "/comment/get_comment?id="+Healthy_diet_id)
+                .get()
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses = response.body().string();
+            response.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return responses;
+    }
+
+    public String FindMyAll(String  username){
+        OkHttpClient client = new OkHttpClient();
+        Request request = new Request.Builder()
+                .url(url + "/healthydiet/findmyall?username="+username)
+                .get()
+                .build();
+        try {
+            Response response = client.newCall(request).execute();
+            responses = response.body().string();
             response.close();
         } catch (IOException e) {
             e.printStackTrace();

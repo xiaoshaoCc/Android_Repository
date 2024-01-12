@@ -35,7 +35,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="35dp"
-            android:src="@mipmap/food"
+            android:src="@mipmap/fooddiet"
             app:layout_constraintBottom_toBottomOf="@id/food_name"
             app:layout_constraintEnd_toStartOf="@id/food_name"
             app:layout_constraintHorizontal_bias="0.0"

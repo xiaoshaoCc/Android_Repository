@@ -19,6 +19,13 @@
     tools:layout="@layout/fragment_c"
         />
     <fragment
+        android:id="@+id/healthydiet"
+        android:name="com.example.myapplication.UserCenterFragment.Healthydiet"
+        android:label="healthydiet"
+        tools:layout="@layout/fragment_healthydiet"
+        />
+
+    <fragment
     android:id="@+id/dfragement"
     android:name="com.example.myapplication.UserCenterFragment.Dfragment"
     android:label="dfragement"

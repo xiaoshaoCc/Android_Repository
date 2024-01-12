@@ -21,6 +21,7 @@ public class Dfragment extends Fragment {
     private TextView username;
     private TextView edit_psw;
     private TextView change_user;
+    private TextView my_text;
 
     @Nullable
     @Override
@@ -61,6 +62,17 @@ public class Dfragment extends Fragment {
                 });
                 builder.setNegativeButton("取消",null);
                 builder.show();
+            }
+        });
+
+
+        my_text=view.findViewById(R.id.healthy_diet);
+        my_text.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent1=new Intent(requireContext(),My_healthy_diet_Activity.class);
+                intent1.putExtra("username",msg);
+                startActivity(intent1);
             }
         });
 

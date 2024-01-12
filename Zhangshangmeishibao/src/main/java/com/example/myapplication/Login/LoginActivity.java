@@ -107,7 +107,7 @@ public class LoginActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     //更新服务
-                                    String downloadUrl = "http://192.168.0.3:9090/download?fileName=system.pptx";
+                                    String downloadUrl = "http://121.40.249.214:8080/download?fileName=掌上美食宝.apk";
                                     Context context = getApplicationContext();
                                     // 使用 Intent 打开浏览器并下载文件
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(downloadUrl));
@@ -222,7 +222,6 @@ public class LoginActivity extends AppCompatActivity {
             case 1:
                 if (grantResults[0] != PackageManager.PERMISSION_GRANTED) {
                     Toast.makeText(this, "没有定位权限！", Toast.LENGTH_LONG).show();
-                    finish();
                 } else {
                     requestLocation();
                 }
